@@ -54,3 +54,37 @@ function manipulaDados(sinalOperacao, controle) {
         peca.value = parseInt(peca.value) - 1
     }
 }
+
+btnProducao.addEventListener("click", (e)=>{
+    e.preventDefault()
+    atualizaDados()
+})
+
+function atualizaDados(){
+    const qtsPecas = [...document.querySelectorAll("[data-contador]")] //valor da quantidade de peças
+    const itemPeca = [...document.getElementsByClassName("peca-titulo")] //nome da peça
+
+    let forcaPeca = 0
+    let poderPeca = 0
+    let energiaPeca = 0
+    let velocidadePeca = 0
+
+    for(i=0; i < itemPeca.length; i++){
+        const nomePeca = itemPeca[i].dataset.peca //nome da peça
+        const qtsPeca = qtsPecas[i].value
+        const {forca, poder, energia, velocidade} = pecas[nomePeca] //@s chaves = atribuição via desestruturação
+
+        forcaPeca += forca * qtsPeca
+        poderPeca += poder * qtsPeca
+        energiaPeca += energia * qtsPeca
+        velocidadePeca += velocidade * qtsPeca
+    }
+
+    const estatisticaAtual = [forcaPeca, poderPeca, energiaPeca, velocidadePeca]
+    let indice = 0
+
+    estatistica.forEach((item)=>{
+        item.textContent = estatisticaAtual[indice]
+        indice ++
+    })
+}
